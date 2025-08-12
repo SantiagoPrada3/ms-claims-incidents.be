@@ -1,0 +1,88 @@
+# ================================
+# APPLICATION CONFIGURATION
+# ================================
+app:
+  name: Claims Incidents Microservice
+  description: Microservicio para gestión de reclamos e incidentes
+  version: 1.0.0
+  data:
+    initialize: false  # Deshabilitar la carga automática de datos
+
+# ================================
+# SERVER CONFIGURATION
+# ================================
+server:
+  port: ${SERVER_PORT:8089}
+  address: 0.0.0.0  # Permitir conexiones desde cualquier interfaz
+
+# ================================
+# SPRING CONFIGURATION
+# ================================
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://santiago:santiago19@cluster0.b7mgq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: claims-incidents
+
+# ================================
+# CORS CONFIGURATION
+# ================================
+cors:
+  allowed-origins: "*"
+  allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS,HEAD
+  allowed-headers: "*"
+  allow-credentials: true
+  max-age: 3600
+
+# ================================
+# API DOCUMENTATION
+# ================================
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    try-it-out-enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    disable-swagger-default-url: true
+  default-produces-media-type: application/json
+  paths-to-match: /api/**
+  show-actuator: false
+  # Configuración específica para WebFlux
+  webjars:
+    prefix: /webjars
+
+# ================================
+# MANAGEMENT & ACTUATOR
+# ================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+
+
+# ================================
+# LOGGING CONFIGURATION
+# ================================
+logging:
+  level:
+    root: INFO
+    pe.edu.vallegrande: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.data.mongodb: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.netty: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n" 
